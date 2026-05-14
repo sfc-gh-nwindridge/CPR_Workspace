@@ -163,7 +163,16 @@ SELECT
       '   - Is source of wealth adequately investigated?\n',
       '   - Is ongoing monitoring proposed?\n',
       '   - Are reporting obligations (SAR/STR) considered?\n',
-      '6. DECISION: APPROVED / REJECTED / ESCALATE_TO_MLRO'
+      '6. DECISION: APPROVED / REJECTED / ESCALATE_TO_MLRO\n\n',
+      '=== CRITICAL OUTPUT CONSTRAINTS ===\n',
+      'You MUST keep your response CONCISE to avoid truncation:\n',
+      '- regulatory_compliance: MAX 2 sentences summarising compliance status.\n',
+      '- missing_risk_factors: MAX 5 items, each MAX 20 words.\n',
+      '- additional_actions_required: MAX 5 items, each MAX 15 words.\n',
+      '- escalation_reason: MAX 2 sentences.\n',
+      '- checker_notes: MAX 3 sentences.\n',
+      '- All string fields must be brief and factual. Do NOT write paragraphs.\n',
+      '- CRITICAL: Each JSON key must appear EXACTLY ONCE. Do NOT repeat any key (e.g. do NOT output missing_risk_factors twice).'
     ),
     response_format => {
       'type': 'json',
