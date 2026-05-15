@@ -164,6 +164,7 @@ SELECT
       '   - Is ongoing monitoring proposed?\n',
       '   - Are reporting obligations (SAR/STR) considered?\n',
       '6. DECISION: APPROVED / REJECTED / ESCALATE_TO_MLRO\n\n',
+      'Respond in JSON. Keep all values concise.\n',
       '=== CRITICAL OUTPUT CONSTRAINTS ===\n',
       'You MUST keep your response CONCISE to avoid truncation:\n',
       '- regulatory_compliance: MAX 2 sentences summarising compliance status.\n',
@@ -171,9 +172,9 @@ SELECT
       '- additional_actions_required: MAX 5 items, each MAX 15 words.\n',
       '- escalation_reason: MAX 2 sentences.\n',
       '- checker_notes: MAX 3 sentences.\n',
-      '- All string fields must be brief and factual. Do NOT write paragraphs.\n',
-      '- CRITICAL: Each JSON key must appear EXACTLY ONCE. Do NOT repeat any key (e.g. do NOT output missing_risk_factors twice).'
+      '- All string fields must be brief and factual. Do NOT write paragraphs.'
     ),
+    model_parameters => {'temperature': 0},
     response_format => {
       'type': 'json',
       'schema': {
@@ -193,7 +194,10 @@ SELECT
           'checker_notes':              {'type': 'string'}
         },
         'required': ['check_status', 'senior_risk_score', 'maker_risk_score_appropriate',
-                     'regulatory_compliance', 'final_recommendation']
+                     'score_variance', 'missing_risk_factors', 'additional_actions_required',
+                     'regulatory_compliance', 'sar_consideration', 'ongoing_monitoring_level',
+                     'escalation_reason', 'final_recommendation', 'checker_notes'],
+        'additionalProperties': false
       }
     }
   ) AS senior_review,
